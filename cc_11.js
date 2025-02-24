@@ -27,3 +27,26 @@ let book1 = new Book ("The Nameless Monster", "Franz Bonaparta", 123456, 5)
 console.log(book1.getDetails()); // Expected Output: Title: The Nameless Monster, Author: Franz Bonaparta, ISBN: 123456, Number of Copies: 5
 book1.updateCopies(-1);
 console.log(book1.getDetails()); // Expected Output: Title: The Nameless Monster, Author: Franz Bonaparta, ISBN: 123456, Number of Copies: 4
+
+// Task 2: Creating a borrower Class
+
+class Borrower {
+    constructor(name, borrowerID, borrowedBooks) {
+        this.name = name;
+        this.borrowerID = borrowerID;
+        this.borrowedBooks = []; // borrowedBooks is an array of books
+    };
+
+    borrowBook(book) {
+        this.borrowedBooks.push(book); // pushes the input book to the borrowedBooks array
+    }
+
+    returnBook(book) {
+        this.borrowedBooks.pop(book); // removes the input book from the borrowedBooks array
+    }
+}
+const borrower1 = new Borrower("Johan Liebert", 201);
+borrower1.borrowBook("The Nameless Monster"); // Expected Output: ['The Nameless Monster']
+console.log(borrower1.borrowedBooks);
+borrower1.returnBook("The Nameless Monster"); 
+console.log(borrower1.borrowedBooks); // Expected Output: []
