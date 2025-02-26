@@ -50,3 +50,24 @@ borrower1.borrowBook("The Nameless Monster"); // Expected Output: ['The Nameless
 console.log(borrower1.borrowedBooks);
 borrower1.returnBook("The Nameless Monster"); 
 console.log(borrower1.borrowedBooks); // Expected Output: []
+
+// Task 3: Creating a Library Class
+
+class Library {
+    constructor(books = [], borrowers = []) { // Decided to write the [] here instead since we dont want a new array called every time, and instead we want to refrence an existing information
+        this.books = books;
+        this.borrowers = borrowers;
+    }
+
+    addBook(book) {
+        this.books.push(book); // we add a book object to the books array which matches the book parameter entered 
+    }
+
+    listBooks() {
+        return this.books.map(book => book.getDetails()); // for the books array, we are mapping each individual book element to the getDetails() function, giving us the getDetails() output for each book
+    }
+};
+
+const library1 = new Library;
+library1.addBook(book1); // Adding a book that we have already defined
+console.log(`Library || ${library1.listBooks()}`); // Expected Output: Library || Title: The Nameless Monster, Author: Franz Bonaparta, ISBN: 123456, Number of Copies: 4
