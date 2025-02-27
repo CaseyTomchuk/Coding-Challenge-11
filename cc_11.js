@@ -84,12 +84,12 @@ class Library {
      if (typeof book === 'undefined') { // checks to see if the book actually exists based (it would not exist if the isbn doesnt exist)
         console.log(`No book found with this ISBN: ${isbn}`);
         return; // This is necessary!!!!! if the function continues to run there will be errors!!!
-    };
+    }
 
     if (typeof borrower === 'undefined') {
         console.log(`Invalid Borrower`);
         return;
-    }; 
+    }
 
         if (book.copies > 0) { // if we have any copies left, we'll remove a copy
             book.updateCopies(-1);
@@ -97,8 +97,29 @@ class Library {
         }
         else {
             console.log(`No copies remaining, come back in 2 weeks`); // I don't love the way that this executes, but the idea is there
-        };
+        }
     };
+
+    // Task 5:
+    returnBook(borrowerID, isbn) { 
+
+        //I copied the code of task 4 but more or less inverted it
+
+        const book = this.books.find(book => book.isbn === isbn); 
+        const borrower = this.borrowers.find(borrower => borrower.borrowerID === borrowerID);
+        
+        if (typeof book === 'undefined') { 
+           console.log(`No book found with this ISBN: ${isbn}`);
+           return; 
+       }
+   
+       if (typeof borrower === 'undefined') {
+           console.log(`Invalid Borrower`);
+           return;
+       }
+         book.updateCopies(1); // add a copy back
+         borrower.returnBook(book); // return a book rather than borrow
+       };
 };
 
 const library1 = new Library;
@@ -109,7 +130,14 @@ console.log(`Library || ${library1.listBooks()}`); // Expected Output: Library |
 // Task 4: Implementing Book Borrowing
 
 library1.lendBook(201, 123456); 
-library1.lendBook(201, 12345); // Expected Output: No book found with this ISBN: 12345 (NOT AN EXISTING ISBN EXAMPLE)
 
 console.log(book1.getDetails()); // Expected Output: Title: The Nameless Monster, Author: Franz Bonaparta, ISBN: 123456, Number of Copies: 3
-console.log(borrower1.borrowedBooks[0].title);
+console.log(borrower1.borrowedBooks[0].title); // Expected output: The Nameless Monster
+
+// Task 5: Implementing Book Returns
+
+library1.returnBook(201, 123456);
+
+console.log(`After returning book:`);
+console.log(book1.getDetails()); // Expected Output: Title: The Nameless Monster, Author: Franz Bonaparta, ISBN: 123456, Number of Copies: 4
+console.log(borrower1.borrowedBooks); // Expected Output: [] 
